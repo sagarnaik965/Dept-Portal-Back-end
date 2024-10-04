@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.view.RedirectView;
 
 import in.cdac.portal.modal.AllowedOpr;
@@ -29,6 +32,7 @@ import in.cdac.portal.modal.Count;
 import in.cdac.portal.modal.Count1;
 import in.cdac.portal.modal.DeptList;
 import in.cdac.portal.modal.UserStatus;
+import in.cdac.portal.modal.WrapperClass;
 import in.cdac.portal.services.BillingServices;
 import in.cdac.portal.services.DashboardService;
 import in.cdac.portal.services.SummaryServices;
@@ -39,6 +43,8 @@ import in.cdac.portal.services.UserService;
 @RestController
 public class DeptController {
 
+	@Autowired
+	Environment env;
 	
 	@Autowired
 	UserService userServ;
@@ -134,6 +140,7 @@ public class DeptController {
 		return null;
 	}
 
+	@ResponseBody
 	@PostMapping(value = "/appcodedetails")
 	public List<UserStatus> appcodeDetailsR(@RequestBody String username) {
 		List<UserStatus> userlist = new ArrayList<>();
@@ -141,7 +148,6 @@ public class DeptController {
 			userlist = dashServ.getAppcodeR(username);
 			return userlist;
 		} catch (Exception e) {
-			e.printStackTrace();
 			logger.info("Exception Data for list of application not found " + e.getMessage());
 			return userlist;
 		}
@@ -253,5 +259,23 @@ public class DeptController {
 	public void testName(@RequestBody String pass) {
 
 	}
+//	------------------------------------------------------------
+	
+	@ResponseBody
+	@RequestMapping(value = "/PortalData", method = RequestMethod.GET)
+	public WrapperClass PortalDataIgnite() {
+		try {
+			ArrayList<String> resAl = new ArrayList<String>();
+			
+			String url = env.getProperty("apiurl");
+			RestTemplate rt = new RestTemplate();
+			WrapperClass b = rt.getForObject(url, WrapperClass.class);
+			return b;	
+		} catch (Exception e) {
+			logger.info(e.getMessage());
+		}
+		return null;
+	}
+ 
 
 }

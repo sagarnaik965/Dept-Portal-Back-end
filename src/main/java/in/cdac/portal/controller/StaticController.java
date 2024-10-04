@@ -242,7 +242,7 @@ public Map<String, Integer> deptwisetransaction() {
 // controller for getting dept-service wise transaction
 @PostMapping(value = "/deptservicewisetransaction")
 public 	Map<String, Integer> deptservicewisetransaction(@RequestBody String deptName) {
-	System.out.println(deptName+"------------");
+//	System.out.println(deptName+"------------");
 	try {
 		Map<String, Integer> deptservicetransactions = statserv.getapkAndTransAcToDept(deptName);
 	

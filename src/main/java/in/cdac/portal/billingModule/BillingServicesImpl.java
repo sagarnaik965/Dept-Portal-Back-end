@@ -250,12 +250,13 @@ public class BillingServicesImpl implements BillingServices {
 
 				checkTotal += rep.getApkCount();
 				summaryobj.setTotalCount(Integer.toString(rep.getApkCount()));
-				dataforsummary.add(summaryobj);
-			}
-			if (checkTotal == 0) {
 
-				return null;
+				if (checkTotal != 0) {
+					dataforsummary.add(summaryobj);
+				}
+				
 			}
+			
 			return dataforsummary;
 		} catch (Exception e) {
 			logger.info(e.getMessage());
@@ -498,8 +499,10 @@ public class BillingServicesImpl implements BillingServices {
 				totalcounts = totalcounts + Integer.parseInt(entry.getValue());
 				value = Double.parseDouble(new DecimalFormat("##.##")
 						.format(Double.parseDouble(entry.getValue()) * Double.parseDouble(js.getSlab())));
-				
+				if(Integer.parseInt(entry.getValue())!=0)
+				{
 				billData.add(new Billing(entry.getKey(), Integer.parseInt(entry.getValue()), value));
+				}
 			}
 			Quarter = getQuarterForReport(js.getQuarter());
 
