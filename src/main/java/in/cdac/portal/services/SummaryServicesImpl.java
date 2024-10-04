@@ -80,15 +80,19 @@ public class SummaryServicesImpl implements SummaryServices {
 			byte[] bdata = rt.postForObject(url, arr, byte[].class);
 			ArrayList<String> resAl = new ArrayList<String>();
 			resAl = (ArrayList<String>) SerializationUtils.deserialize(bdata);
+			
 			BillingServicesImpl.resAl = resAl;
 			List<Summary> summaryReport = new ArrayList<>();
 			summaryReport = billSer.getOprSummaryForJasper(deptnamenadcode[0]);
 			if (summaryReport == null) {
-				logger.info("summaryReport  "+summaryReport);
 				return new ResponseEntity<byte[]>(HttpStatus.NO_CONTENT);
 			}
 		
 			SummaryReportTotals sumtotcnt = getTotalCountsForSummary(summaryReport);
+			
+			if (sumtotcnt.getTotal_totalCount() == 0) {
+				return new ResponseEntity<byte[]>(HttpStatus.NO_CONTENT);
+			}
 			Map<String, Object> empParams = new HashMap<String, Object>();
 			empParams.put("CollectionParamBean", new JRBeanCollectionDataSource(summaryReport));
 			empParams.put("DeptName", deptName);
@@ -306,7 +310,7 @@ public class SummaryServicesImpl implements SummaryServices {
 
 	private SummaryReportTotals getTotalCountsForSummary(List<Summary> summaryReport) {
 		// TODO Auto-generated method stub
-
+	
 		Long total_strUid_StoreAadhaarNumber = (long) 0;
 		Long total_strUid_Getexistingreferencenumber = (long) 0;
 		Long total_strUid_Aadhaarduplicatecheck = (long) 0;
@@ -319,6 +323,7 @@ public class SummaryServicesImpl implements SummaryServices {
 		Long total_deActivate_Retrievereferencenumber = (long) 0;
 		Long total_deActivate_Incorrectattempt = (long) 0;
 		Long total_totalCount = (long) 0;
+		
 		SummaryReportTotals sumtotcnt = new SummaryReportTotals();
 		for (Iterator<Summary> iterator = summaryReport.iterator(); iterator.hasNext();) {
 			Summary summary = iterator.next();
@@ -338,6 +343,7 @@ public class SummaryServicesImpl implements SummaryServices {
 			total_totalCount += Long.parseLong(summary.getTotalCount());
 
 		}
+		
 		sumtotcnt.setTotal_strUid_StoreAadhaarNumber(total_strUid_StoreAadhaarNumber);
 		sumtotcnt.setTotal_strUid_Getexistingreferencenumber(total_strUid_Getexistingreferencenumber);
 		sumtotcnt.setTotal_strUid_Aadhaarduplicatecheck(total_strUid_Aadhaarduplicatecheck);
@@ -350,6 +356,7 @@ public class SummaryServicesImpl implements SummaryServices {
 		sumtotcnt.setTotal_deActivate_Retrievereferencenumber(total_deActivate_Retrievereferencenumber);
 		sumtotcnt.setTotal_deActivate_Incorrectattempt(total_deActivate_Incorrectattempt);
 		sumtotcnt.setTotal_totalCount(total_totalCount);
+		
 		return sumtotcnt;
 	}
 
@@ -427,13 +434,12 @@ public class SummaryServicesImpl implements SummaryServices {
 		resAl = getDataFromignite();
 		Map<String, String> deptCode = new HashMap<>();
 		for (String responseData : resAl) {
-//			System.out.println(responseData);
 			if(!deptCode.isEmpty())
 			{
 				break;
 			}
 			String[] responseDataArray = responseData.split(",");
-			if ( !responseDataArray[10].isEmpty() && !responseDataArray[9].isEmpty() && responseDataArray.length > 10 && responseDataArray[9].contentEquals(username)) {
+			if ( responseDataArray.length > 10 && !responseDataArray[10].isEmpty() && !responseDataArray[9].isEmpty() &&  responseDataArray[9].contentEquals(username)) {
 				 deptCode.put(username, responseDataArray[10]);		
 				 deptName=responseDataArray[0];
 			}

@@ -151,7 +151,7 @@ return	redirect;
 			newr.setUrl(env.getProperty("ePramaanControl"));
 		return newr;
 		}
-System.out.println("in home");
+//System.out.println("in home");
 		redirect.setUrl(env.getProperty("ePramaanControl"));
 return	redirect;
 	}
@@ -239,7 +239,7 @@ return	redirect;
 		String url = "https://epramaan.meripehchaan.gov.in/openid/jwt/processOIDCSLORequest.do";
 		String data = "{\"clientId\":\""+env.getProperty("ePrammanService")+"\",\"sessionId\":\""+sessionId+"\",\"hmac\":\""+hmac+"\",\"iss\":\"ePramaan\",\"logoutRequestId\":\""+logoutRequestId+"\",\"sub\":\""+sub+"\",\"redirectUrl\":\""+redirectUrl+"\",\"customParameter\":\""+customParameter+"\"}";
 
-		System.out.println("json string of data: "+ data);
+//		System.out.println("json string of data: "+ data);
 
 		
 		req.setAttribute("redirectionURL", url);

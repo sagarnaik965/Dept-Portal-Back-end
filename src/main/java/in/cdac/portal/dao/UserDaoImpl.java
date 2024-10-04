@@ -7,11 +7,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -187,29 +185,15 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public Map<String, Integer> DonutChart(String userName) {
 		Map<String, Integer> oprmap = new HashMap<String, Integer>();
-//		Set<String> oprlist = new HashSet();
 		oprmap.put("struid", 0);
 		oprmap.put("getuid", 0);
 		oprmap.put("getrefnum", 0);
 		oprmap.put("activate", 0);
 		oprmap.put("deactivate", 0);
-		oprmap.put("delete", 0);
-
 
 		try {
 			ArrayList<String> resAl = new ArrayList<String>();
 			resAl = getDataFromignite();
-			
-//	---------CODE FOR DYNAMIC OPR NAMES BUT IGNITE DATA HAS ONE BLANK OPR---------
-//			for (String lines : resAl) {
-//						String[] igniteData = lines.split(",");
-//						oprlist.add(igniteData[5]);
-//			}
-//			for (String oprs : oprlist) {
-//				System.out.println("oprs---- "+oprs);
-//				if(!oprs.isEmpty() && oprs.contentEquals("null") )
-//				oprmap.put(oprs, 0);
-//			}
 
 			for (String responseData : resAl) {
 				if (!responseData.isEmpty()) {
@@ -242,7 +226,7 @@ public class UserDaoImpl implements UserDao {
 		oprmap.put("getrefnum", 0);
 		oprmap.put("activate", 0);
 		oprmap.put("deactivate", 0);
-		oprmap.put("delete", 0);
+
 		try {
 			ArrayList<String> resAl = new ArrayList<String>();
 			resAl = getDataFromignite();

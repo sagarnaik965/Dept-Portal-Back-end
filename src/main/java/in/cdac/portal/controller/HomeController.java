@@ -120,7 +120,7 @@ public class HomeController {
 
 	@PostMapping(path = "/printUS")
 	public ModelAndView printUS(@RequestBody String req) {
-		System.out.println("post2 get " + req);
+//		System.out.println("post2 get " + req);
 		return new ModelAndView("post2");
 	}
 	@GetMapping(path = "/Logout")

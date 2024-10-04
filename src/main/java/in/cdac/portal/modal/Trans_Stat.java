@@ -2,41 +2,42 @@ package in.cdac.portal.modal;
 
 import java.io.Serializable;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import org.apache.ignite.cache.query.annotations.QuerySqlField;
+//import org.apache.ignite.cache.query.annotations.QuerySqlField;
 
 @Table(name = "trans_stats")
 @Entity
 public class Trans_Stat implements Serializable{
 
-	@QuerySqlField(index = true)
+//	//(index = true)
 	@Column(name = "ac")
 	public String ac;
-	@QuerySqlField(index = true)
+//	//(index = true)
 	@Column(name = "scheme_code")
 	public String scheme_code;
-	@QuerySqlField(index = true)
+//	//(index = true)
 	@Column(name = "opr")
 	public String opr;
-	@QuerySqlField(index = true)
+	//(index = true)
 	@Column(name = "status")
 	public String status;
-	@QuerySqlField(index = true)
+	//(index = true)
 	@Column(name = "err")
 	public String err;
-	@QuerySqlField(index = true)
+	//(index = true)
 	@Column(name = "date")
 	public String date;
-	@QuerySqlField(index = true)
+	//(index = true)
 	@Column(name = "txn_count")
 	public Integer txn_count;
-	@QuerySqlField(index = true)
+	//(index = true)
 	@Column(name = "is_exist_ref_num")
 	public boolean is_exist_ref_num;
-	@QuerySqlField(index = true)
+	//(index = true)
 	@Column(name = "trans_id")
 	public Integer trans_id;
 	

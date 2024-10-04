@@ -45,19 +45,11 @@ public class FlatToken {
     String unique_user_id;
   
     String loginMode;
-    String custom_parameter;
+  
 
  
 
-    public String getCustom_parameter() {
-		return custom_parameter;
-	}
-
-	public void setCustom_parameter(String custom_parameter) {
-		this.custom_parameter = custom_parameter;
-	}
-
-	public String getUnique_user_id() {
+    public String getUnique_user_id() {
         return unique_user_id;
     }
 

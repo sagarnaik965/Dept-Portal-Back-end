@@ -66,7 +66,6 @@ public class GetFileData {
 		}
 		for (String line : resAl) {
 			String[] val = line.split(",");
-			//System.out.println("Result_   "+line);
 			for (Report rpt : repoList) {
 				if (val[0].replaceAll("^\"|\"$", "").contentEquals(rpt.getApkName())) {
 
